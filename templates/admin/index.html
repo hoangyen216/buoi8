@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>My Product List</title>
+<th:block th:replace="layout :: link-css"></th:block>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+
+</head>
+<body>
+	<th:block th:replace="layout :: header"></th:block>
+	<div class="container">
+		<h1>Product List</h1>
+
+		<a th:href="@{/admin/products/create}" class="btn btn-primary">
+			Add Product </a>
+		<h1 th:text=${title}></h1>
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Image</th>
+				<th>Price</th>
+				<th>Actions</th>
+			</tr>
+			<tr th:each="product : ${listProduct}">
+				<td th:text="${product.id}"></td>
+				<td th:text="${product.name}"></td>
+				<td><img height="120" width="150"
+					th:src="@{/images/{image}(image=${product.image})}"></td>
+				<td th:text="${product.price}"></td>
+				<td><a class="btn btn-primary"
+					th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a>
+					<form th:action="@{/products/delete/{id}(id=${product.id})}"
+						method="post">
+						<button class="btn btn-danger" type="submit">Delete</button>
+					</form></td>
+			</tr>
+		</table>
+	</div>
+	
+	<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
